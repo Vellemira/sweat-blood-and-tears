@@ -4,5 +4,8 @@ Debug/
 *.vcxprog
 *.filters
 *.user
+*.db
 *.suo
 *.vcxproj
+*.json
+*.sqlite
