@@ -5,9 +5,9 @@
 #include "libbmp.h"
 
 enum canal {
-	BLUE,
+	RED,
 	GREEN,
-	RED
+	BLUE
 };
 
 char to_char(bool arr[8]) {
@@ -22,7 +22,7 @@ char to_char(bool arr[8]) {
 bool get_bit(int x, int y, BmpImg img) {
 	static int len = 0;
 	int color_num;
-	static canal color = BLUE;
+	static canal color = RED;
 	static bool temp[8] = {};
 
 	switch (color) {
@@ -61,12 +61,9 @@ bool get_bit(int x, int y, BmpImg img) {
 int main() {
 	BmpImg img; img.read("pic13.bmp");
 
-	const int y_max = img.get_height();
-	const int x_max = img.get_width();
-
-	for (int y_pos = 0; y_pos < y_max; y_pos++) {
-		for (int x_pos = 0; x_pos < x_max; x_pos++) {
-			//            std::cout << std::endl << x_pos << ' ' << y_pos << std::endl;
+	const int x_max = 600, y_max = 650;
+	for (int x_pos = 0; x_pos < x_max; x_pos++) {
+		for (int y_pos = 0; y_pos < y_max; y_pos++) {
 			if (!get_bit(x_pos, y_pos, img)) return 0;
 			if (!get_bit(x_pos, y_pos, img)) return 0;
 			if (!get_bit(x_pos, y_pos, img)) return 0;
