@@ -4,16 +4,22 @@
 using namespace std;
 
 int main() {
-	double a, b, x1, x2, d, y, x_max, x_min, x;
-
+	setlocale(LC_ALL, "RUS");
+	double a, b, x1, x2, d, y, y_max, y_min, x;
 	bool flag = true;
 
-	cin >> a >> b >> x1 >> x2 >> d;
+	cout << "Введите значение переменной а: ";
+	cin >> a;
+	cout << "Введите значение переменной b: ";
+	cin >> b;
+	cout << "Введите диапазон от: "; cin >> x1; cout << "до: "; cin >> x2;
+	cout << "Ведите шаг: ";
+	cin >> d;
 	cout << " x" << "\t" << "  y" << endl;
 	cout << "----------------" << endl;
 	x = x1;
-	x_max = 0;
-	x_min = 0;
+	y_min = 0;
+	y_max = 0;
 
 	for (int i = 0; i <= (x2-x1)/d; i++, x += d) 
 	{
@@ -24,16 +30,16 @@ int main() {
 
 		if (flag) 
 		{
-			x_max = y;
-			x_min = y;
+			y_min = y;
+			y_max = y;
 			flag = false;
 		}
-		else if (y > x_max) x_max = y;
-		else if (y < x_min) x_min = y;
+		else if (y < y_min) y_min = y;
+		else if (y > y_max) y_max = y;
 
 		cout << x << " \t " << y << endl;
 	}
 	cout << "----------------" << endl;
-	cout << "max: " << x_max << "\t" << "min: " << x_min << endl;
+	cout << "минимум: " << y_min << "\t "<< "максимум: " << y_max << endl;
 	return 0;
 }
