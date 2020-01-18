@@ -23,10 +23,11 @@ int main() {
 
 	for (int i = 0; i <= (x2-x1)/d; i++, x += d) 
 	{
-
 		if (x <= a) y = abs(x);
-		else if ((a < x) && (x < b)) y = abs(x) + cos(x);
-		else if (x >= b) y = tan(x);
+		else 
+			if ((a < x) && (x < b)) y = abs(x) + cos(x);
+		else 
+			if (x >= b) y = tan(x);
 
 		if (flag) 
 		{
@@ -34,8 +35,10 @@ int main() {
 			y_max = y;
 			flag = false;
 		}
-		else if (y < y_min) y_min = y;
-		else if (y > y_max) y_max = y;
+		else
+			if (y < y_min) y_min = y;
+		else 
+			if (y > y_max) y_max = y;
 
 		cout << x << " \t " << y << endl;
 	}
