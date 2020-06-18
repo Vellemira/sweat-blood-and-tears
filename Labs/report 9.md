@@ -24,9 +24,10 @@
 # Тестирование при помощи Google Test Framework<br>
 ## Цель:
 
-* Познакомиться с Google Test и Google Mock Framework;
-* Изучить базовые понятия относящийся к тестированию кода;
-* Научиться тестировать классы в среде разработки Qt Creator.
+1. Познакомиться с Google Test и Google Mock Framework;
+2. Изучить базовые понятия относящийся к тестированию кода;
+3. Научиться тестировать классы в среде разработки Qt Creator.
+
 ## Ход работы:<br>
 Ссылка на исходные файлы: [*клик*](https://github.com/kickStranger/programming/tree/master/labs/lab9)<br>
 ### Инструменты<br>
@@ -46,23 +47,32 @@ Google Test и Google Mock Framework - ✓<br>
 Скачаны [фреймы](https://github.com/google/googletest) Google Test и Google Mock. Создан проект для автотестирования.<br>
 
 ![](https://sun3.43222.userapi.com/Lw36mnIE5SVh_B4CEeMe94uuRs3RTcAHur13Jg/qJMjBALR9dI.jpg)<br>
-Рис.1. Процесс создания тест-проекта<br>
+
+*Рисунок 1. Процесс создания тест-проекта*<br>
 
 ### Проверка работоспособности пустого тестового проекта<br>
 
 ![](https://sun3.43222.userapi.com/AKjZMHW-AReORkuPNTIAjQtjNSP3_gWwCS4CvA/jrAxePVsdfE.jpg)
-Рис.2. Результат тестирования через консоль.<br>
+*Рисунок 2. Результат тестирования через консоль.*<br>
 
 ![](https://sun2.43222.userapi.com/HE9u0olyKBZhcLub-1dUN22IvFWmSTVJfflnGw/DAVb6uH2uag.jpg)
-<br>Рис.3. Результат через "Результаты тестирования"
+<br>
+
+*Рисунок 3. Результат через "Результаты тестирования".*
 
 ### Настройка тестового проекта<br>
 
 ![](https://sun2.43222.userapi.com/nyf8hi2-Nw6AOQ7fTD9kCcu7jCp5JIBSOS7sEA/P6Etiyw3ECs.jpg)
-<br>Рис.4. Добавление боевого проекта.<br>
+<br>
+
+*Рисунок 4. Добавление боевого проекта.*<br>
+
 ### Конечный результат<br>
-![](https://sun3.43222.userapi.com/SMy5r-Q8333nNbHezQOCfNKbTSllPhcyYBszdg/dkN8rb75Duk.jpg)<br>Рис.5. Конечный результат.<br>
+![](https://sun3.43222.userapi.com/SMy5r-Q8333nNbHezQOCfNKbTSllPhcyYBszdg/dkN8rb75Duk.jpg)<br>
+
+*Рисунок 5. Конечный результат.*<br>
 Для фикса ошибки, необходимо изменить метод таким образом<br>
+
 ```C++
 DoorStatus LockController::lockDoor()
 {
@@ -71,6 +81,8 @@ DoorStatus LockController::lockDoor()
 ```
 <br> Данная ошибка возникла при копировании вышестоящего метода.<br>
 ### Вывод:<br>
+------
+
 Выполнив лабораторную работу, я ознакомилась с Google Test и Google Mock Framework, получила некие навыки юнит тестов.
 
 
