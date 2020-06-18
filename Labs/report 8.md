@@ -9,7 +9,7 @@
 <br/>
 
 студентки 1 курса группы ИВТ-б-о-192(1)  
-Николаевой Владимира Григорьевна  
+Николаевой Владимиры Григорьевны  
 направления подготовки 09.03.01 "Информатика и вычислительная техника"  
 
 <br/>
@@ -57,8 +57,15 @@ JDK использовался мной ранее. Чтобы быть спок
 **Запуск Android проекта**<br>
 Последним шагом стал запуск рандомного проекта. 
 
-![](https://sun2.43222.userapi.com/eiNMEAdmj-oLAIU3XpT9n97QfSBl4RdfkImWkQ/y6kijmcUlG4.jpg)
-<br> *Рисунок 4. Запуск проекта*<br>
+![](https://psv4.userapi.com/c856220/u166751189/docs/d3/4bd65a38a13e/10.png?extra=rdNJPL8OLkPjTxKT5UbuPjvpWrQgbLQAz-gU8Gy7s5H1sZBh4TApQVVZF9vCTgIH2srSpfANM60LijRkrsyHkAXTNx5zrXYYSF6CBqPiqadhBcBLMKWGx6zCkhfP_l_Rs0WXzIhOwf__8-mX8FVFCRedIg)
+
+*Рисунок 4. Выбранный проект*<br>
+
+![](https://sun9-69.userapi.com/jSrU3iKkKA5IoB8Zj60w9ZXETNbKOz3RFZCpog/GDe4oLx15wY.jpg)
+
+*Рисунок 5. Запуск приложения на телефоне*
+
+
 
 ### Вывод:<br>
 ------
