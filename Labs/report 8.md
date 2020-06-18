@@ -37,7 +37,7 @@
 **Установка JDK 8** <br>
 JDK использовался мной ранее. Чтобы быть спокойным, я проверила версию данного ПО.
 
-![Рисунок 1. Проверка версии](![img](https://sun2.43222.userapi.com/996R1O3J-92oVUHeustAv-LD-mpbN41S8C3ydA/h7J4EDdeO_s.jpg)<br>*Рисунок 1. Проверка версии JDK*<br>
+(![img](https://sun2.43222.userapi.com/996R1O3J-92oVUHeustAv-LD-mpbN41S8C3ydA/h7J4EDdeO_s.jpg)<br>*Рисунок 1. Проверка версии JDK*<br>
 Так как версия не совсем совпадала, пришлось обновить.
 
 **Установка Android Studio**<br>
