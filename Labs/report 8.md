@@ -35,16 +35,15 @@
 ------
 
 **Установка JDK 8** <br>
-JDK использовался мной ранее. Чтобы быть спокойным, я проверила версию данного ПО.
+JDK использовался мной ранее. Мне пришлось только проверить текущую версию и обновиться.
 
 ![img](https://sun2.43222.userapi.com/996R1O3J-92oVUHeustAv-LD-mpbN41S8C3ydA/h7J4EDdeO_s.jpg)<br>*Рисунок 1. Проверка версии JDK*<br>
-Так как версия не совсем совпадала, пришлось обновить.
 
 **Установка Android Studio**<br>
-С [данного](https://developer.android.com/studio) сайта была скачана и установлена Android Studio последней версии. Из-за того, что на сайт не пускает пришлось использовать VPN. <br>
-После установки Android Studio, были установлены SDK необходимых версий.<br>
+Скачиваем и устанавливаем с [этого](https://developer.android.com/studio) сайта Android Studio. <br>
+После установки Android Studio устанавливаем SDK нужной версии.<br>
 ![](https://sun2.43222.userapi.com/vE0QBnSjW4mnIRTGQE2QQS_m0sHIOra52AmxRA/_vsCtPmWb5Y.jpg)
-<br>
+
 
 *Рисунок 2. SDK*<br>
 Так как Android Studio была установлена ранее и использовалась не в связки с QT, я вручную установила дополнительные компоненты, а именно: NDK, с [официиального](https://developer.android.com/ndk/downloads/) сайта.<br>
@@ -55,19 +54,17 @@ JDK использовался мной ранее. Чтобы быть спок
 <br> *Рисунок 3. Правильная настройка QT* <br>
 
 **Запуск Android проекта**<br>
-Последним шагом стал запуск рандомного проекта. 
+Запускаем любой понравившийся проект на Android. <br>
 
-![](https://psv4.userapi.com/c856220/u166751189/docs/d3/4bd65a38a13e/10.png?extra=rdNJPL8OLkPjTxKT5UbuPjvpWrQgbLQAz-gU8Gy7s5H1sZBh4TApQVVZF9vCTgIH2srSpfANM60LijRkrsyHkAXTNx5zrXYYSF6CBqPiqadhBcBLMKWGx6zCkhfP_l_Rs0WXzIhOwf__8-mX8FVFCRedIg)
+Мой выбор пал на Qt SCXML Calculator.<br>
 
-*Рисунок 4. Выбранный проект*<br>
+![](https://psv4.userapi.com/c856324/u166751189/docs/d4/02c61928601b/GDe4oLx15wY.jpg?extra=Jwb62s4pbZQ84AshzMLCiaItAcNHXUh2AWRAjSgtjRHziIgeoV0O_q8AXnTAryIYT0_x7okGDBxaZxGypuu5bATexNVUDEeIAvZpjJO3y5bt3QeGBpugg7O7CO__rvOi1Z2b48magwKW2BjS6f2vG_Ms)
 
-![](https://sun9-69.userapi.com/jSrU3iKkKA5IoB8Zj60w9ZXETNbKOz3RFZCpog/GDe4oLx15wY.jpg)
-
-*Рисунок 5. Запуск приложения на телефоне*
+*Рисунок 4. Запуск приложения на телефоне*
 
 
 
 ### Вывод:<br>
 ------
 
-В ходе данной лабораторной работы была произведена адаптация QT Creator для создания приложений под Android OC, а также получены навыки создания и отладки Android приложений на языке C++.
+При выполнении лабораторной работы мной была произведена адаптация QT Creator для разработки приложений под Android OC, изучены базовые понятия мобильной разработки, а также получены навыки создания и отладки Android приложений на языке C++.
