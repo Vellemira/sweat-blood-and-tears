@@ -49,42 +49,46 @@
 **Код программы:**
 
 ```C++
-#include <iostream>
+include <iostream>
 #include "libbmp.h"
-void bit(int k) {  
-    static int i = 0;
-    static int arr[8];
-    arr[i] = k;
-    i++;
-    if (i == 8) {  
-        char c = 0;
-        for (int i = 7; i >= 0; i--) {
-            c = c | (arr[7 - i] << i);  
-        }
-        if (c == '\0') exit(0); 
-        std::cout << c;
-        i = 0;
-    }
+
+void decoder(int d);
+
+int main()
+{
+	BmpImg img;
+	img.read("pic3.bmp");
+
+	int width = img.get_width(), height = img.get_height();
+
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = 0; j < height; j++) 
+		{
+			const int RED = img.red_at(i, j), GREEN = img.green_at(i, j), BLUE = img.blue_at(i, j);
+			decoder(1 & RED);
+			decoder(1 & GREEN);
+			decoder(1 & BLUE);
+		}
+	}
 }
-int main() 
-{   
-    //00r 00g 00b 01r 01g 01b 10r 10g - key
-    BmpImg img;
-    img.read("pic3.bmp");    
-    int width = img.get_width();
-    int height = img.get_height();  
-    for (int i = 0; i < width; i++)
-    {
-        for (int j = 0; j < height; j++)
-        {
-            int red = img.red_at(i, j);
-            int green = img.green_at(i, j);
-            int blue = img.blue_at(i, j);  
-            bit(1 & red);
-            bit(1 & green);
-            bit(1 & blue);
-        }
-    }
+
+void decoder(int d)
+{
+	static int i = 0, a[8];
+
+	a[i] = d;
+	i++;
+
+	if (i == 8)
+	{
+		char s = 0;
+
+		for (int i = 7; i >= 0; i--) s = s | (a[7 - i] << i);
+		if (s == '\0') exit(0);
+		std::cout << s;
+		i = 0;
+	}
 }
 
 ```
