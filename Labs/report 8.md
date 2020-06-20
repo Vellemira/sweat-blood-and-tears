@@ -37,26 +37,27 @@
 **Установка JDK 8** <br>
 JDK использовался мной ранее. Мне пришлось только проверить текущую версию и обновиться.
 
-![img](https://sun2.43222.userapi.com/996R1O3J-92oVUHeustAv-LD-mpbN41S8C3ydA/h7J4EDdeO_s.jpg)<br>*Рисунок 1. Проверка версии JDK*<br>
+![img](https://psv4.userapi.com/c856320/u166751189/docs/d14/d6190b35e1c8/h7J4EDdeO_s.jpg?extra=VfQaIm83VjdyqKzA7QNmDe9p6ZAk_kgGnefRFlk-1l0bTvSaBQWOfAdkVLdWAUQdY0PGBEbz1yBrRO9gSqZsMb7lZDGXsrbb2YaESJ3aW1yrwXa6eGtOcy81ooAFm5regY5koTGWQBomx02ru7VMnDfu)<br>*Рисунок 1. Проверка версии JDK*<br>
 
 **Установка Android Studio**<br>
 Скачиваем и устанавливаем с [этого](https://developer.android.com/studio) сайта Android Studio. <br>
 После установки Android Studio устанавливаем SDK нужной версии.<br>
-![](https://sun2.43222.userapi.com/vE0QBnSjW4mnIRTGQE2QQS_m0sHIOra52AmxRA/_vsCtPmWb5Y.jpg)
-
+![](https://psv4.userapi.com/c856320/u166751189/docs/d9/3c63b4121e31/gkdscv.jpg?extra=4DVvs1VCk7EyTuMUeeqVrzwLInS4xYkO9iAvktiGNo6hhULsrEP0YV4WklVm5xGtsU1DVFusrwDQFmoCInj5l57E7E-mXdmdOdwdEsJio24bLqArQ9Sz7nMeB0GN2JiQ0jCjcMWaeHIe9aabO-V6GAis)
 
 *Рисунок 2. SDK*<br>
 Так как Android Studio была установлена ранее и использовалась не в связки с QT, я вручную установила дополнительные компоненты, а именно: NDK, с [официиального](https://developer.android.com/ndk/downloads/) сайта.<br>
 **Настройка QT**<br>
 Затем был настроен QT, путём подключения JDK, SDK, NDK.<br>
 
-![](https://sun3.43222.userapi.com/kbkAPzsbt_8tD-hLfcKhXBE67ycID2TAPj4ILA/wjrlSZe1U94.jpg)
+![](https://psv4.userapi.com/c856320/u166751189/docs/d9/a70a8f8a7f87/dfhhl.jpg?extra=mJJtDtlHsv9L5YOxLrutOO_pYcLltK6qQQkJs_s1cC3xD0zuVPnj1FaS0LyhV7hnsnM1JQJjqEziKm6bK8CzAECvsdKlyJP1pZe_X8ao1QGGXtqsqg2dflSH-CkexGv6F1PNECJBTCvngw7ChIl9F2rO)
 <br> *Рисунок 3. Правильная настройка QT* <br>
 
 **Запуск Android проекта**<br>
 Запускаем любой понравившийся проект на Android. <br>
 
 Мой выбор пал на Qt SCXML Calculator.<br>
+
+Изрядно попотев, в конечном итоге мне удалось запустить это приложение на своём новеньком смартфоне Redmi Note 9s.
 
 ![](https://psv4.userapi.com/c856324/u166751189/docs/d4/02c61928601b/GDe4oLx15wY.jpg?extra=Jwb62s4pbZQ84AshzMLCiaItAcNHXUh2AWRAjSgtjRHziIgeoV0O_q8AXnTAryIYT0_x7okGDBxaZxGypuu5bATexNVUDEeIAvZpjJO3y5bt3QeGBpugg7O7CO__rvOi1Z2b48magwKW2BjS6f2vG_Ms)
 

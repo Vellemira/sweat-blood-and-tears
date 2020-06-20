@@ -29,22 +29,17 @@
 3. Научиться тестировать классы в среде разработки Qt Creator.
 
 ## Ход работы:<br>
-Ссылка на исходные файлы: [*клик*](https://github.com/kickStranger/programming/tree/master/labs/lab9)<br>
 ### Инструменты<br>
 * IDE Qt Creator;
 * Google Test и Google Mock Framework;
 * Костюм железного человека Mark 2;
 * Класс для тестирования.
 
-IDE QT Creator - ✓<br>
-Google Test и Google Mock Framework - ✓<br>
-Костюм железного человека Mark II - ✓<br>
-Класс для тестирования - ✓<br>
-### Подготовка боевого проекта<br>
-Был скачан [необходимый](https://neroid.ru/wp-content/uploads/2020/05/Lab9_Project_for_tests.zip) архив с такими же необходимыми файлами.<br>
+### Подготовка "боевого" проекта<br>
+Скачиваем [необходимый](https://neroid.ru/wp-content/uploads/2020/05/Lab9_Project_for_tests.zip) архив.<br>
 
 ### Создание тестового проекта в Qt Creator<br>
-Скачаны [фреймы](https://github.com/google/googletest) Google Test и Google Mock. Создан проект для автотестирования.<br>
+Скачиваем [фреймы](https://github.com/google/googletest) Google Test и Google Mock. Создаём проект, который будет автоматически тестироваться.<br>
 
 ![](https://sun3.43222.userapi.com/Lw36mnIE5SVh_B4CEeMe94uuRs3RTcAHur13Jg/qJMjBALR9dI.jpg)<br>
 
@@ -53,12 +48,12 @@ Google Test и Google Mock Framework - ✓<br>
 ### Проверка работоспособности пустого тестового проекта<br>
 
 ![](https://sun3.43222.userapi.com/AKjZMHW-AReORkuPNTIAjQtjNSP3_gWwCS4CvA/jrAxePVsdfE.jpg)
-*Рисунок 2. Результат тестирования через консоль.*<br>
+*Рисунок 2. Ввод в консоль.*<br>
 
 ![](https://sun2.43222.userapi.com/HE9u0olyKBZhcLub-1dUN22IvFWmSTVJfflnGw/DAVb6uH2uag.jpg)
 <br>
 
-*Рисунок 3. Результат через "Результаты тестирования".*
+*Рисунок 3. Вывод в "Результаты тестирования".*
 
 ### Настройка тестового проекта<br>
 
