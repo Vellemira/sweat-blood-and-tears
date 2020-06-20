@@ -39,23 +39,6 @@
 2. Основываясь на файле data_dictionary.txt реализовываем структуру Passenger.
    </br><br>
 
-#### Структура passenger:
-```C++
-struct Passenger{
-    int id;
-    bool survival;
-    Pclass pclass;
-    std::string name;
-    Sex sex;
-    double age;
-    short int sibsp, 
-              parch;
-    std::string ticket;
-    double fare;
-    std::string cabin;
-    Embarked embarked;
-};
-```
 #### Main.cpp:
 
 ```C++
@@ -65,187 +48,235 @@ struct Passenger{
 #include<fstream>
 #include<string>
 
-enum class Pclass {First=1, Second, Third};
-enum class Sex { Male, Female };
-enum Embarked { C, Q, S };
+using namespace std;
 
-struct Passenger{
-    int id;
-    bool survival;
-    Pclass pclass;
-    std::string name;
-    Sex sex;
-    double age;
-    short int sibsp, 
-              parch;
-    std::string ticket;
-    double fare;
-    std::string cabin;
-    Embarked embarked;
+enum class Sex 
+{ 
+	Female,
+	Male 
+};
+enum class Pclass 
+{
+	FIRST = 1, 
+	SECOND, 
+	//THIRD 
+};
+enum Embarked
+{ 
+	C, 
+	Q, 
+	S 
 };
 
-std::vector<Passenger> passengers;
-std::vector<int> children;
+struct Passenger 
+{
+	int number;
+	bool survival;
+	Pclass pclass;
+	string name;
+	Sex sex;
+	double age;
+	int sibsp, parch;
+	string ticket;
+	double fare;
+	string cabin;
+	Embarked embarked;
+};
 
-std::string readuntil(std::ifstream& fin, char end = '\r') {  
-    std::string s = "";
-    char buffer;
-    while (fin.read(&buffer, 1)) {
-        if (buffer != end) s += buffer;
-        else break;
-    }
-    return s;
+vector<int> children;
+vector<Passenger> passengers;
+
+int ending = -1;
+int endingSize = 1;
+
+string readToStr(string str, string endingStr) 
+{
+	int begin = ending + endingSize;
+
+	ending = str.find(endingStr, begin);
+	endingSize = endingStr.size();
+
+	return str.substr(begin, ending - begin);
 }
 
-int end = -1; // сохраняет последнюю позицию в строке
-int lastEndSize = 1; // сохраняет кол-во знаков
+string reading(ifstream& fin, char ending = '\r')
+{
+	string s = "";
+	char storage;
 
-std::string readuntilstr(std::string str, std::string endStr) {  
-    int begin = end + lastEndSize;
-    end = str.find(endStr, begin);
-    lastEndSize = endStr.size();
-    return str.substr(begin, end - begin);
+	while (fin.read(&storage, 1)) 
+	{
+		if (storage != ending) 
+			s += storage;
+		else
+			break;
+	}
+
+	return s;
 }
 
-std::string shtatw(Embarked max) { 
-    if (max == 0)  return "C";
-    else if (max == 1) return "Q";
-    else return "S";
+string state(Embarked max) 
+{
+	if (max == 0)  
+		return "C";
+	else if (max == 1) 
+		return "Q";
+	else 
+		return "S";
 }
+
 int main()
 {
-    setlocale(LC_ALL, "Russian");
-    std::ifstream fin("train1.csv");
+	setlocale(LC_ALL, "RUS");
+	ifstream fin("train1.csv");
+	if (!fin)
+	{
+		cout << "Error!";
+		exit(1);
+	}
+	ofstream fout("File1.txt");
+	string rString;
+	reading(fin, '\r');
 
-    	if (!fin)
-    {
-        std::cout << "Uh oh, something went wrong!";
-        exit(1);
-    }
+	while (true) 
+	{
 
-    std::ofstream fout("File1.txt");
-    std::string line;
-    readuntil(fin, '\r');  
+		ending = -1;
 
-    while (true) {
+		rString = reading(fin, '\r');
+		if (rString == "") 
+			break;
 
-        end = -1;  
+		Passenger p;
+		p.number = stoi(readToStr(rString, ","));
+		p.survival = stoi(readToStr(rString, ","));
+		p.pclass = (Pclass)stoi(readToStr(rString, ",\""));
+		p.name = readToStr(rString, "\",");
+		p.sex = readToStr(rString, ",") == "male" ? Sex::Male : Sex::Female;
 
-        line = readuntil(fin, '\r');
-        	if (line == "") break;
-        Passenger p;
-        p.id = std::stoi(readuntilstr(line, ","));
-        p.survival = std::stoi(readuntilstr(line, ","));
-        p.pclass = (Pclass)std::stoi(readuntilstr(line, ",\""));
-        p.name = readuntilstr(line, "\",");
-        p.sex = readuntilstr(line, ",") == "male" ? Sex::Male : Sex::Female;
+		string years = readToStr(rString, ",");
 
-        std::string ag = readuntilstr(line, ",");
-        	if (ag == "") p.age = -1;
-        	else p.age = std::stod(ag);
+		if (years == "") 
+			p.age = -1;
+		else 
+			p.age = stod(years);
 
-        p.sibsp = std::stoi(readuntilstr(line, ","));
-        p.parch = std::stoi(readuntilstr(line, ","));
-        p.ticket = readuntilstr(line, ",");
-        p.fare = std::stod(readuntilstr(line, ",")); 
-        p.cabin = readuntilstr(line, ",");
+		p.sibsp = stoi(readToStr(rString, ","));
+		p.parch = stoi(readToStr(rString, ","));
+		p.ticket = readToStr(rString, ",");
+		p.fare = stod(readToStr(rString, ","));
+		p.cabin = readToStr(rString, ",");
 
-        std::string em = readuntilstr(line, ",");
-        	if (em == "C") p.embarked = Embarked::C;
-        	else if (em == "Q") p.embarked = Embarked::Q;
-        	else p.embarked = Embarked::S;
+		string em = readToStr(rString, ",");
+		if (em == "C") 
+			p.embarked = Embarked::C;
+		else if (em == "Q") 
+			p.embarked = Embarked::Q;
+		else 
+			p.embarked = Embarked::S;
 
-        passengers.push_back(p);
-    }
+		passengers.push_back(p);
+	}
 
-   int calive = 0,
-        fclass = 0,
-        sclass = 0,
-        thclass = 0,
-        female = 0,
-        male = 0;
-    double average_age = 0;
-    int female_all = 0,
-        male_all = 0;
-    double average_female = 0, // сред. жен. возраст
-           average_male = 0; // сред. муж. возраст
-    int shtat[3]{};
-    int age_all = 0;
-    Embarked shtat_max = C;
+	int survivalAll = 0, first = 0, second = 0, third = 0, female = 0, male = 0;
+	double averageAge = 0;
+	int femaleAll = 0, maleAll = 0;
+	double averageFemaleAge = 0, averageMaleAge = 0;
+	int aState[3]{};
+	int age_all = 0;
+	Embarked stateMax = C;
 
-    for (int i = 0; i < passengers.size(); i++) {
-        if (passengers[i].survival) {
-            calive++;
-            	if (passengers[i].pclass == Pclass::First) fclass++;
-            	else if (passengers[i].pclass == Pclass::Second) sclass++;
-            	else thclass++;
-				
-            	if (passengers[i].sex == Sex::Female) female++;
-            	else male++;
-        };
-        if (passengers[i].age != -1) {
-            average_age += passengers[i].age;
-            age_all++;
-            	if (passengers[i].sex == Sex::Female) {
-            		female_all++;
-                	average_female += passengers[i].age;
-            	}
-            	else {
-                	male_all++;
-                	average_male += passengers[i].age;
-            	}
-        }
-        
-		shtat[passengers[i].embarked]++;
-        
-      	if (passengers[i].age < 18 && passengers[i].age!=-1) children.push_back(passengers[i].id);
-  }
-    average_age /= age_all; 
-    average_female /= female_all; 
-    average_male /= male_all; 
-	
-    	if (shtat[shtat_max] < shtat[Q]) shtat_max = Q; 
-    	if (shtat[shtat_max] < shtat[S]) shtat_max = S;
+	for (int i = 0; i < passengers.size(); i++) 
+	{
+		if (passengers[i].survival) 
+		{
+			survivalAll++;
+			if (passengers[i].pclass == Pclass::FIRST)
+				first++;
+			else if (passengers[i].pclass == Pclass::SECOND)
+				second++;
+			else 
+				third++;
 
-    fout << "Общее число выживших:" << calive << '\n'
-        << "Число выживших из 1 класса:" << fclass << '\n'
-        << "Число выживших из 2 класса:" << sclass << '\n'
-        << "Число выживших из 3 класса:" << thclass << '\n'
-        << "Количество выживших женщин:" << female << '\n'
-        << "Количество выживших мужчин:" << male << '\n'
-        << "Средний возраст пассажира:" << average_age << '\n'
-        << "Средний женский возраст:" << average_female << '\n'
-        << "Средний мужской возраст:" << average_male << '\n'
-        << "Штат, в котором село больше всего пассажиров:" << shtatw(shtat_max) << '\n'
+			if (passengers[i].sex == Sex::Female) 
+				female++;
+			else 
+				male++;
+		};
+
+		if (passengers[i].age != -1) 
+		{
+			averageAge += passengers[i].age;
+			age_all++;
+
+			if (passengers[i].sex == Sex::Female) 
+			{
+				femaleAll++;
+				averageFemaleAge += passengers[i].age;
+			}
+
+			else 
+			{
+				maleAll++;
+				averageMaleAge += passengers[i].age;
+			}
+		}
+
+		aState[passengers[i].embarked]++;
+
+		if (passengers[i].age < 18 && passengers[i].age != -1) 
+			children.push_back(passengers[i].number);
+	}
+	averageAge /= age_all;
+	averageFemaleAge /= femaleAll;
+	averageMaleAge /= maleAll;
+
+	if (aState[stateMax] < aState[Q]) 
+		stateMax = Q;
+	if (aState[stateMax] < aState[S]) 
+		stateMax = S;
+
+	fout << "Общее число выживших:" << survivalAll << '\n'
+		<< "Число выживших из 1 класса:" << first << '\n'
+		<< "Число выживших из 2 класса:" << second << '\n'
+		<< "Число выживших из 3 класса:" << third << '\n'
+		<< "Количество выживших женщин:" << female << '\n'
+		<< "Количество выживших мужчин:" << male << '\n'
+		<< "Средний возраст пассажира:" << averageAge << '\n'
+		<< "Средний возраст женщин:" << averageFemaleAge << '\n'
+		<< "Средний возраст мужчин:" << averageMaleAge << '\n'
+		<< "Штат, в котором село больше всего пассажиров:" << state(stateMax) << '\n'
 		<< "Список идентификаторов несовершеннолетних (младше 18) пассажиров:" << '\n';
-    
-    for (int i = 0; i < children.size(); i++) {
-        if (i == children.size() - 1) {
-            fout << children[i];
-            break;
-        }
-		
-        fout << children[i] << ",";
-    }
-    
-    fout.close();
-    fin.close();
+
+	for (int i = 0; i < children.size(); i++) 
+	{
+		if (i == children.size() - 1) 
+		{
+			fout << children[i];
+			break;
+		}
+
+		fout << children[i] << ",";
+	}
+
+	fout.close();
+	fin.close();
 }
 ```
 Таблица с характеристиками:<br>
-| **Характеристика**  | **Результат**   |
-| ------------ | ------------ |
-| Общее число выживших  | 342  |
-| Число выживших из 1 класса  | 136  |
-| Число выживших из 2 класса  | 87  |
-| Число выживших из 3 класса  | 119  |
-| Количество выживших женщин  | 233  |
-| Количество выживших мужчин  | 109  |
-| Средний возраст пассажира  | 29.6793  |
-| Средний женский возраст  | 27.9042  |
-| Средний мужской возраст  | 30.702  |
-| Штат, в котором село больше всего пассажиров  | S  |
-| Список идентификаторов несовершеннолетних (младше 18) пассажиров |8,10,11,15,17,23,25,40,44,51,59,60,64,69,72,79,85,87,112,115,120,126,139,148,157,164,165,166,172,173,183,184,185,194,206,209,221,234,238,<br>262,267,279,283,298,306,308,330,334,341,349,353,375,382,387,390,408,420,434,436,446,447,449,470,480,481,490,501,505,531,533,536,542,543,<br>550,551,575,619,635,643,645,684,687,690,692,721,722,732,747,751,752,756,765,778,781,782,788,789,792,803,804,814,820,825,828,831,832,842,<br>845,851,853,854,870,876 |
+|                                           **Характеристика** | **Результат**                                                |
+| -----------------------------------------------------------: | ------------------------------------------------------------ |
+|                                         Общее число выживших | 342                                                          |
+|                                   Число выживших из 1 класса | 136                                                          |
+|                                   Число выживших из 2 класса | 87                                                           |
+|                                   Число выживших из 3 класса | 119                                                          |
+|                                   Количество выживших женщин | 233                                                          |
+|                                   Количество выживших мужчин | 109                                                          |
+|                                    Средний возраст пассажира | 29.6793                                                      |
+|                                      Средний  возраст женщин | 27.9042                                                      |
+|                                      Средний  возраст мужчин | 30.702                                                       |
+|                 Штат, в котором село больше всего пассажиров | S                                                            |
+| Список идентификаторов несовершеннолетних (младше 18) пассажиров | 8,10,11,15,17,23,25,40,44,51,59,60,64,69,72,79,85,87,112,115,120,126,139,148,157,164,165,166,172,173,183,184,185,194,206,209,221,234,238,<br>262,267,279,283,298,306,308,330,334,341,349,353,375,382,387,390,408,420,434,436,446,447,449,470,480,481,490,501,505,531,533,536,542,543,<br>550,551,575,619,635,643,645,684,687,690,692,721,722,732,747,751,752,756,765,778,781,782,788,789,792,803,804,814,820,825,828,831,832,842,<br>845,851,853,854,870,876 |
 <br>
 
 В итоге получаем файл с результатом: [result.txt](https://github.com/Vellemira/sweat-blood-and-tears/blob/master/Labs/Laba%205/result.txt)
