@@ -43,7 +43,7 @@
 
 ![](https://sun3.43222.userapi.com/Lw36mnIE5SVh_B4CEeMe94uuRs3RTcAHur13Jg/qJMjBALR9dI.jpg)<br>
 
-*Рисунок 1. Процесс создания тест-проекта*<br>
+*Рисунок 1. Создание тестового проекта*<br>
 
 ### Проверка работоспособности пустого тестового проекта<br>
 
@@ -60,13 +60,13 @@
 ![](https://sun2.43222.userapi.com/nyf8hi2-Nw6AOQ7fTD9kCcu7jCp5JIBSOS7sEA/P6Etiyw3ECs.jpg)
 <br>
 
-*Рисунок 4. Добавление боевого проекта.*<br>
+*Рисунок 4. Добавление "боевого" проекта.*<br>
 
 ### Конечный результат<br>
-![](https://sun3.43222.userapi.com/SMy5r-Q8333nNbHezQOCfNKbTSllPhcyYBszdg/dkN8rb75Duk.jpg)<br>
+![img](https://sun9-38.userapi.com/BQ8V7NtYDKjlCMpAv7kLfgf-quxKbmPA0oxRgQ/4nvz3RhgVdg.jpg)<br>
 
-*Рисунок 5. Конечный результат.*<br>
-Для фикса ошибки, необходимо изменить метод таким образом<br>
+*Рисунок 5. Конечный результат.*<br>Для устранения ошибки необходимо заменить код на:
+<br>
 
 ```C++
 DoorStatus LockController::lockDoor()
@@ -74,10 +74,11 @@ DoorStatus LockController::lockDoor()
     return latch->close();
 }
 ```
-<br> Данная ошибка возникла при копировании вышестоящего метода.<br>
+<br>Эта ошибка вызывалась при копировании  метода.<br>
+
 ### Вывод:<br>
 ------
 
-Выполнив лабораторную работу, я ознакомилась с Google Test и Google Mock Framework, получила некие навыки юнит тестов.
+Выполнив лабораторную работу, я ознакомилась с Google Test и Google Mock Framework, получила некие навыки юнит-тестов.
 
 
