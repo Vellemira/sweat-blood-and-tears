@@ -86,7 +86,7 @@ int main()
     svr.listen("localhost", 3000); //localhost 
 }
 ```
-4. В итоге получаем вывод информации о погоде:![](![img](https://sun9-39.userapi.com/M6U-USwznrZTq6_xGMx9srIjQ7bO51szMY5yrg/oJF4oBv-Oyw.jpg)<br>*Рисунок 1. Результат*<br>
+4. В итоге получаем вывод информации о погоде:![img](https://sun9-39.userapi.com/M6U-USwznrZTq6_xGMx9srIjQ7bO51szMY5yrg/oJF4oBv-Oyw.jpg)<br>*Рисунок 1. Результат*<br>
 
 ## Вывод:
 Выполнив лабораторную работу, я закрепила навыки разработки многофайловых приложений, изучила процесс сериализации/десериализации данных, а также научилась работать с API.
