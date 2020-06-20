@@ -41,30 +41,58 @@
 #### main.cpp <br>
 ```C++
 #include <iostream>
-#include "game_func.h"
-using namespace std;
+#include "Header.h"
+
 int main()
 {
-  setlocale(LC_ALL, "RUS"); int sum = 0;
-    char pChar;
-    do {
-        cout << "Выберите Х или 0: ";
-        cin >> pChar;
-    } while (pChar != 'X' && pChar != '0');
-    Game mainGame = initGame(pChar);
-    while (!updateGame(&mainGame))
-    {
-        if (mainGame.isUserTurn)userTurn(&mainGame);
-        else botTurn(&mainGame);
-        updateDisplay(mainGame);
-    }
-    if (mainGame.status == USER_WIN)cout << "Вы победили!";
-    else if (mainGame.status == BOT_WIN)cout << "Вы проиграли!";
-    else cout << "Ничья!";
+	setlocale(LC_ALL, "RUS");
+	char symbol;
+	bool isEmpty = false;
+
+	std::cout << "Выбери, X или 0?: ";
+	std::cin >> symbol;
+	if (symbol != 'X' && symbol != '0') 
+	{
+		std::cout << "Выберите между Х и 0 >:c" << std::endl;
+		while (symbol != 'X' && symbol != '0') {
+			std::cin >> symbol;
+		}
+	}
+	Game game = initGame(symbol);
+	while (game.status == PLAY) {
+		isEmpty = false;
+		
+		updateDisplay(game);
+		if (game.isUserTurn == true) {
+			game.isUserTurn = false;
+			userTurn(&game);
+			updateDisplay(game);
+		}
+		else {
+			game.isUserTurn = true;
+			botTurn(&game);
+			updateDisplay(game);
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (game.bord[i][j] == ' ')
+					isEmpty = true;
+			}
+		}
+		if (!isEmpty)
+			game.status = NOT_WIN;
+
+	}
+	if (game.status == USER_WIN) std::cout << "Вы победили!";
+	else if (game.status == BOT_WIN) std::cout << "Вы проиграли!";
+	else if (game.status == NOT_WIN)std::cout << "Ничья!";
+	return 0;
 }
 ```
 </br><br>
-#### game_func.h
+#### Header.h
 ```C++
 #pragma once
 
@@ -89,208 +117,489 @@ int main()
   bool updateGame(Game* game);
 ```
 
-#### game_func.cpp
+#### Helper.cpp
 ```C++
-#include "game_func.h"
 #include <iostream>
 #include <time.h>
-using namespace std;
+#include "Header.h"
 
-Game initGame(char userChar)
-{
-  srand(time(NULL));
-  Game new_game;
-  for (int i = 0; i < 3; i++)
-    for (int j = 0; j < 3; j++)
-      new_game.bord[i][j] = ' ';
-  new_game.isUserTurn = bool(rand() % 2);
-  new_game.userChar = userChar;
-  new_game.status = PLAY;
-  switch (new_game.userChar)
-  {
-  case '0': new_game.botChar = 'X'; break;
-  case 'X': new_game.botChar = '0'; break;
-  }
-  return new_game;
-
+void updateDisplay(const Game game) {
+	system("cls");
+	std::cout << "\t      *\t   0   1   2                                                   \n  \t\t -------------" << std::endl;
+	std::cout << "\t      0\t | " << game.bord[0][0] << " | " << game.bord[0][1] << " | " << game.bord[0][2] << " | \n  \t\t -------------" << std::endl;
+	std::cout << "\t      1\t | " << game.bord[1][0] << " | " << game.bord[1][1] << " | " << game.bord[1][2] << " | \n  \t\t -------------" << std::endl;
+	std::cout << "\t      2\t | " << game.bord[2][0] << " | " << game.bord[2][1] << " | " << game.bord[2][2] << " | \n  \t\t -------------" << std::endl;
 }
-void updateDisplay(const Game game)
-{
-  system("cls");
 
-  cout << "a  " << "b  " << "c " << endl;
-  cout << "__________" << endl;
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; j++) {
-      cout << "| " << game.bord[i][j] << "";
-    }
-    cout << "[ " << i << endl << "__________" << endl;
-  }
-}
-void botTurn(Game* game)
-{
-  /*
-  *
-  Выполняет ход бота. В выбранную ячейку устанавливается символ которым играет бот.
-  Бот должен определять строку, столбец или диагональ в которой у игрока больше всего иксиков/ноликов и ставить туда свой символ.
-  Если на поле ещё нет меток, бот должен ставить свой знак в центр.
-  В остальных случаях бот ходит рандомно.
-  */
-  bool isEmpty = true;
-  for (int i = 0; i < 3; i++)
-    for (int j = 0; j < 3; j++)
-    {
-      if (game->bord[i][j] != ' ')
-      {
-        isEmpty = 0; break;
-      }
-    } // проверка пустое ли поле
-  if (isEmpty) game->bord[1][1] = game->botChar;
-  else
-  {
-
-    for (int i = 0; i < 3; i++) // строка
-    {
-      int str = 0, col = 0;
-      for (int j = 0; j < 3; j++)
-      {
-        if (game->bord[i][j] == game->userChar) str++;
-        else if (game->bord[i][j] != game->userChar) col = j;
-      }
-      if (str == 2) {
-        game->bord[i][col] = game->botChar; return;
-      }
-    }
-    for (int i = 0; i < 3; i++) // столбец
-    {
-      int str = 0, col = 0;
-      for (int j = 0; j < 3; j++)
-      {
-        if (game->bord[j][i] == game->userChar) str++;
-        else if (game->bord[j][i] != game->userChar) col = j;
-      }
-      if (str == 2) {
-        game->bord[col][i] = game->botChar; return;
-      }
-    }
-    for (int i = 0; i < 3; i++)//главная диагональ массива
-    {
-      int str = 0, col = 0;
-      for (int j = 0; j < 3; j++)
-      {
-        if (game->bord[i][i] == game->userChar) str++;
-        else if (game->bord[i][i] != game->userChar) col = i;
-      }
-      if (str == 2) { game->bord[col][col] = game->botChar; return; }
-    }
-    for (int i = 0; i < 3; i++) //побочная диагональ массива
-    {
-      int str = 0, col = 0;
-      for (int j = 0; j < 3; j++)
-      {
-        if (game->bord[i][2 - i] == game->userChar) str++;
-        else if (game->bord[i][2 - i] != game->userChar) col = i;
-      }
-      if (str == 2) {
-        game->bord[col][2 - col] = game->botChar; return;
-      }
-    }
-    int str = 0, col = 0;
-    while (game->bord[str][col] != ' ')
-    {
-      str = rand() % 3;
-      col = rand() % 3;
-    }
-    game->bord[str][col] = game->botChar;
-  }
-}
 void userTurn(Game* game)
 {
-  int x_coord = 0, y_coord = 0;
-  bool is_x = true, is_y = true, two_bools = true;
-  while (two_bools)
-  {
-    while (is_x)
-    {
-      cout << "введите х" << endl;
-      cin >> x_coord;
-      if (x_coord < 0 || x_coord > 2) cout << "Данные некорректны, повторите попытку" << endl;
-      else is_x = false;
-    }
-    while (is_y)
-    {
-      cout << "введите y" << endl;
-      cin >> y_coord;
-      if (y_coord < 0 || y_coord > 2) cout << "Данные некорректны, повторите попытку!" << endl;
-      else is_y = false;
-    }
-    if (game->bord[x_coord][y_coord] == ' ')two_bools = false;
-    else
-    {
-      cout << "Ошибка, ошибок нет:))" << endl;
-      is_x = true;
-      is_y = true;
-    }
+	int a, s;
+	char tri[3];
+	std::cout << "введите горизонтальную координату: ";
+	std::cin >> a;
+	std::cout << "введите вертикальную координату: ";
+	std::cin >> s;
+	if (game->bord[a][s]==' ' && ((a>=0 && a<3)&&(s >=0 && s<3)))
+	game->bord[a][s] = game->userChar;
+	else {
+		while (!(game->bord[a][s] == ' ' && ((a >= 0 && a < 3) && (s >= 0 && s < 3)))) {
+			std::cout << "Данные введены некорректно, повтоите попытку \n";
+			std::cin >> a >> s;
+		}
+		game->bord[a][s] = game->userChar;
+	}
+	// проверка по горизонтали
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			tri[j] = game->bord[i][j];
+		}
+		if (tri[0] == game->botChar && tri[1] == game->botChar && tri[2] == game->botChar)
+		{
+			game->status = BOT_WIN;
+			break;
+		}
+		else
+			if (tri[0] == game->userChar && tri[1] == game->userChar && tri[2] == game->userChar)
+			{
+				game->status = USER_WIN;
+				break;
+			}
+	}
 
-  }
-  game->bord[x_coord][y_coord] = game->userChar;
+	// проверка по вертикали
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			tri[j] = game->bord[j][i];
+		}
+		if (tri[0] == game->botChar && tri[1] == game->botChar && tri[2] == game->botChar)
+		{
+			game->status = BOT_WIN;
+			break;
+		}
+		else
+			if (tri[0] == game->userChar && tri[1] == game->userChar && tri[2] == game->userChar)
+			{
+				game->status = USER_WIN;
+				break;
+			}
+	}
+
+	// проверка по диагонали 1 
+	for (int i = 0; i < 3; i++)
+	{
+		tri[i] = game->bord[i][i];
+	}
+	if (tri[0] == game->botChar && tri[1] == game->botChar && tri[2] == game->botChar)
+	{
+		game->status = BOT_WIN;
+	}
+	else
+		if (tri[0] == game->userChar && tri[1] == game->userChar && tri[2] == game->userChar)
+		{
+			game->status = USER_WIN;
+		}
+	// проверка по диагонали 2
+	tri[0] = game->bord[0][2];
+	tri[1] = game->bord[1][1];
+	tri[2] = game->bord[2][0];
+	if (tri[0] == game->botChar && tri[1] == game->botChar && tri[2] == game->botChar)
+	{
+		game->status = BOT_WIN;
+	}
+	else
+		if (tri[0] == game->userChar && tri[1] == game->userChar && tri[2] == game->userChar)
+		{
+			game->status = USER_WIN;
+		}
+
+
 }
-bool updateGame(Game* game)
-{
-  int counter;
-  for (int i = 0; i < 3; i++)
-  {
-    counter = 0;
-    for (int j = 0; j < 3; j++)
-    {
-      if (game->bord[i][j] == game->userChar) counter++;
-      else if (game->bord[i][j] == game->botChar) counter--;
-    }
-    if (counter == 3) game->status = USER_WIN;
-    else if (counter == -3)game->status = BOT_WIN;
-  }
-  for (int i = 0; i < 3; i++)
-  {
-    counter = 0;
-    for (int j = 0; j < 3; j++)
-    {
-      if (game->bord[j][i] == game->userChar) counter++;
-      else if (game->bord[j][i] == game->botChar) counter--;
-    }
-    if (counter == 3) game->status = USER_WIN;
-    else if (counter == -3)game->status = BOT_WIN;
-  }
-  for (int i = 0; i < 3; i++)
-  {
-    counter = 0;
-    if (game->bord[i][i] == game->userChar) counter++;
-    else if (game->bord[i][i] == game->botChar) counter--;
-    if (counter == 3) game->status = USER_WIN;
-    else if (counter == -3)game->status = BOT_WIN;
-  }
-  for (int i = 0; i < 3; i++)
-  {
-    counter = 0;
-    for (int j = 0; j < 3; j++)
-    {
 
-    }
-  }
-  if (game->status == PLAY) {
-    counter = 0;
-    for (int i = 0; i < 3; i++) {
-      for (int k = 0; k < 3; k++) {
-        if (game->bord[i][k] == ' ')counter++;
-      }
-    }
-    if (!counter) {
-      game->status = NOT_WIN;
-      return true;
-    }
-    game->isUserTurn = !game->isUserTurn;
-    return false;
-  }
-  return true;
+Game initGame(char userChar) {
+	Game game;
+	srand(time(0));
+		game.isUserTurn = rand()%2;
+		game.userChar = userChar;
+		if (userChar == 'X')
+			game.botChar = '0';
+		else
+			game.botChar = 'X';
+		game.status = PLAY;
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				game.bord[i][j] = ' ';
+			}
+		}
+	return game;
+}
+
+void botTurn(Game* game)
+{
+	bool turned = false;
+	//проверка по горизонтали
+	for (int i = 0; i < 3; i++)
+	{
+		if (turned == true) // бот походил, больше поля искать не нужно
+			break;
+
+		for (int j = 0; j < 3; j++) {
+
+			if (turned == true)
+				break;
+
+			switch (j)
+			{
+			case 0:
+				if ((game->bord[i][j] == game->botChar) && (game->bord[i][j + 1] == game->botChar))
+				{
+					if (game->bord[i][j + 2] == ' ') // проверочка что поле свободно
+					{
+						game->bord[i][j + 2] = game->botChar;
+						turned = true;
+						game->status = BOT_WIN;
+					}
+					else break;
+
+					break;
+				}
+				else if ((game->bord[i][j] == game->botChar) && (game->bord[i][j + 2] == game->botChar))
+				{
+					if (game->bord[i][j + 1] == ' ') // Проверочка что поле Свободно
+					{
+						game->bord[i][j + 1] = game->botChar;
+						turned = true;
+						game->status = BOT_WIN;
+					}
+					else break;
+					break;
+				}
+				break;
+			case 1:
+				if ((game->bord[i][j] == game->botChar) && (game->bord[i][j + 1] == game->botChar))
+				{
+					if (game->bord[i][j - 1] == ' ')  // Проверочка что поле свободно
+					{
+						game->bord[i][j - 1] = game->botChar;
+						turned = true;
+						game->status = BOT_WIN;
+					}
+					else break;
+
+					break;
+				}
+				break;
+			}
+		}
+	}
+	// По вертикали
+	for (int j = 0; j < 3; j++)
+	{
+		if (turned == true) // бот походил, больше поля искать не нужно
+			break;
+
+		for (int i = 0; i < 3; i++) {
+
+			if (turned == true)
+				break;
+
+			switch (i)
+			{
+			case 0:
+				if ((game->bord[i][j] == game->botChar) && (game->bord[i + 1][j] == game->botChar))
+				{
+					if (game->bord[i + 2][j] == ' ') // проверочка что поле не занято ботом
+					{
+						game->bord[i + 2][j] = game->botChar;
+						turned = true;
+						game->status = BOT_WIN;
+					}
+					else break;
+
+					break;
+				}
+				else if ((game->bord[i][j] == game->botChar) && (game->bord[i + 2][j] == game->botChar))
+				{
+					if (game->bord[i + 1][j] == ' ') // Проверочка что поле не занято ботом
+					{
+						game->bord[i + 1][j] = game->botChar;
+						turned = true;
+						game->status = BOT_WIN;
+					}
+					else
+						break;
+
+					break;
+				}
+				else
+					break;
+
+			case 1:
+				if ((game->bord[i][j] == game->botChar) && (game->bord[i + 1][j] == game->botChar))
+				{
+					if (game->bord[i - 1][j] == ' ')  // Проверочка что поле не занято ботом
+					{
+						game->bord[i - 1][j] = game->botChar;
+						turned = true;
+						game->status = BOT_WIN;
+					}
+					else break;
+
+					break;
+				}
+				else
+					break;
+			}
+		}
+	}
+	// по диагонали 1 
+	if (turned != true)
+	{
+		if ((game->bord[0][0] == game->botChar) && (game->bord[1][1] == game->botChar))
+		{
+			if (game->bord[2][2] == ' ') // проверочка что поле не занято ботом
+			{
+				game->bord[2][2] = game->botChar;
+				turned = true;
+				game->status = BOT_WIN;
+			}
+		}
+		else
+			if ((game->bord[0][0] == game->botChar) && (game->bord[2][2] == game->botChar))
+			{
+				if (game->bord[1][1] == ' ') // Проверочка что поле не занято ботом
+				{
+					game->bord[1][1] = game->botChar;
+					turned = true;
+					game->status = BOT_WIN;
+				}
+			}
+			else
+				if ((game->bord[1][1] == game->botChar) && (game->bord[2][2] == game->botChar))
+				{
+					if (game->bord[0][0] == ' ')  // Проверочка что поле не занято ботом
+					{
+						game->bord[0][0] = game->botChar;
+						turned = true;
+						game->status = BOT_WIN;
+					}
+				}
+	}
+	// по диагонали 2
+	if (turned != true)
+	{
+		if ((game->bord[0][2] == game->botChar) && (game->bord[1][1] == game->botChar))
+		{
+			if (game->bord[2][0] == ' ') // проверочка что поле не занято ботом
+			{
+				game->bord[2][0] = game->botChar;
+				turned = true;
+				game->status = BOT_WIN;
+			}
+		}
+		else
+			if ((game->bord[0][2] == game->botChar) && (game->bord[2][0] == game->botChar))
+			{
+				if (game->bord[1][1] == ' ') // Проверочка что поле не занято ботом
+				{
+					game->bord[1][1] = game->botChar;
+					turned = true;
+					game->status = BOT_WIN;
+				}
+			}
+			else
+				if ((game->bord[2][0] == game->botChar) && (game->bord[1][1] == game->botChar))
+				{
+					if (game->bord[0][2] == ' ')  // Проверочка что поле не занято ботом
+					{
+						game->bord[0][2] = game->botChar;
+						turned = true;
+						game->status = BOT_WIN;
+					}
+				}
+	}
+	//проверка куда поставитььььь
+	for (int i = 0; i < 3; i++)
+	{
+		if (turned == true) // бот походил, больше поля искать не нужно
+			break;
+
+		for (int j = 0; j < 3; j++) {
+
+			if (turned == true)
+				break;
+
+			switch (j)
+			{
+			case 0:
+				if ((game->bord[i][j] == game->userChar) && (game->bord[i][j + 1] == game->userChar))
+				{
+					if (game->bord[i][j + 2] == ' ') // проверочка что поле свободно
+					{
+						game->bord[i][j + 2] = game->botChar;
+						turned = true;
+					}
+					else break;
+
+					break;
+				}
+				else if ((game->bord[i][j] == game->userChar) && (game->bord[i][j + 2] == game->userChar))
+				{
+					if (game->bord[i][j + 1] == ' ') // Проверочка что поле Свободно
+					{
+						game->bord[i][j + 1] = game->botChar;
+						turned = true;
+					}
+					else break;
+					break;
+				}
+				break;
+			case 1:
+				if ((game->bord[i][j] == game->userChar) && (game->bord[i][j + 1] == game->userChar))
+				{
+					if (game->bord[i][j - 1] == ' ')  // Проверочка что поле свободно
+					{
+						game->bord[i][j - 1] = game->botChar;
+						turned = true;
+					}
+					else break;
+
+					break;
+				}
+				break;
+			}
+		}
+	}
+	// По вертикали
+	for (int j = 0; j < 3; j++)
+	{
+		if (turned == true) // бот походил, больше поля искать не нужно
+			break;
+
+		for (int i = 0; i < 3; i++) {
+
+			if (turned == true)
+				break;
+
+			switch (i)
+			{
+			case 0:
+				if ((game->bord[i][j] == game->userChar) && (game->bord[i + 1][j] == game->userChar))
+				{
+					if (game->bord[i + 2][j] == ' ') // проверочка что поле не занято ботом
+					{
+						game->bord[i + 2][j] = game->botChar;
+						turned = true;
+					}
+					else break;
+
+					break;
+				}
+				else if ((game->bord[i][j] == game->userChar) && (game->bord[i + 2][j] == game->userChar))
+				{
+					if (game->bord[i + 1][j] == ' ') // Проверочка что поле не занято ботом
+					{
+						game->bord[i + 1][j] = game->botChar;
+						turned = true;
+					}
+					else
+						break;
+
+					break;
+				}
+				else
+					break;
+
+			case 1:
+				if ((game->bord[i][j] == game->userChar) && (game->bord[i + 1][j] == game->userChar))
+				{
+					if (game->bord[i - 1][j] == ' ')  // Проверочка что поле не занято ботом
+					{
+						game->bord[i - 1][j] = game->botChar;
+						turned = true;
+					}
+					else break;
+
+					break;
+				}
+				else
+					break;
+			}
+		}
+	}
+	// по диагонали 1 
+	if (turned != true)
+	{
+		if ((game->bord[0][0] == game->userChar) && (game->bord[1][1] == game->userChar))
+		{
+			if (game->bord[2][2] == ' ') // проверочка что поле не занято ботом
+			{
+				game->bord[2][2] = game->botChar;
+				turned = true;
+			}
+		}
+		else
+			if ((game->bord[0][0] == game->userChar) && (game->bord[2][2] == game->userChar))
+			{
+				if (game->bord[1][1] == ' ') // Проверочка что поле не занято ботом
+				{
+					game->bord[1][1] = game->botChar;
+					turned = true;
+				}
+			}
+			else
+				if ((game->bord[1][1] == game->userChar) && (game->bord[2][2] == game->userChar))
+				{
+					if (game->bord[0][0] == ' ')  // Проверочка что поле не занято ботом
+					{
+						game->bord[0][0] = game->botChar;
+						turned = true;
+					}
+				}
+	}
+	// по диагонали 2
+	if (turned != true)
+	{
+		if ((game->bord[0][2] == game->userChar) && (game->bord[1][1] == game->userChar))
+		{
+			if (game->bord[2][0] == ' ') // проверочка что поле не занято ботом
+			{
+				game->bord[2][0] = game->botChar;
+				turned = true;
+			}
+		}
+		else
+			if ((game->bord[0][2] == game->userChar) && (game->bord[2][0] == game->userChar))
+			{
+				if (game->bord[1][1] == ' ') // Проверочка что поле не занято ботом
+				{
+					game->bord[1][1] = game->botChar;
+					turned = true;
+				}
+			}
+			else
+				if ((game->bord[2][0] == game->userChar) && (game->bord[1][1] == game->userChar))
+				{
+					if (game->bord[0][2] == ' ')  // Проверочка что поле не занято ботом
+					{
+						game->bord[0][2] = game->botChar;
+						turned = true;
+					}
+				}
+				else if (!turned) {
+				again:
+					int a = rand() % 3, b = rand() % 3;
+					if (game->bord[a][b] == ' ')
+						game->bord[a][b] = game->botChar;
+					else
+						goto again;
+				}
+	}
 }
 ```
 ### Вывод: 
