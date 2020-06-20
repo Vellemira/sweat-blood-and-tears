@@ -32,14 +32,13 @@
 ### Инструменты<br>
 * IDE Qt Creator;
 * Google Test и Google Mock Framework;
-* Костюм железного человека Mark 2;
 * Класс для тестирования.
 
 ### Подготовка "боевого" проекта<br>
 Скачиваем [необходимый](https://neroid.ru/wp-content/uploads/2020/05/Lab9_Project_for_tests.zip) архив.<br>
 
 ### Создание тестового проекта в Qt Creator<br>
-Скачиваем [фреймы](https://github.com/google/googletest) Google Test и Google Mock. Создаём проект, который будет автоматически тестироваться.<br>
+Скачиваем с официального [репозитория](https://github.com/google/googletest) Google Test и Google Mock. Создаём проект, который будет автоматически тестироваться.<br>
 
 ![](https://sun3.43222.userapi.com/Lw36mnIE5SVh_B4CEeMe94uuRs3RTcAHur13Jg/qJMjBALR9dI.jpg)<br>
 
@@ -48,9 +47,9 @@
 ### Проверка работоспособности пустого тестового проекта<br>
 
 ![](https://sun3.43222.userapi.com/AKjZMHW-AReORkuPNTIAjQtjNSP3_gWwCS4CvA/jrAxePVsdfE.jpg)
-*Рисунок 2. Ввод в консоль.*<br>
+*Рисунок 2. Вывод в консоль.*<br>
 
-![](https://sun2.43222.userapi.com/HE9u0olyKBZhcLub-1dUN22IvFWmSTVJfflnGw/DAVb6uH2uag.jpg)
+![](https://sun9-37.userapi.com/YLQ2uoqHAlKrbdGbNFXgX-qaiRR9P821aRt1ew/nC1N6vCpnpQ.jpg)
 <br>
 
 *Рисунок 3. Вывод в "Результаты тестирования".*
