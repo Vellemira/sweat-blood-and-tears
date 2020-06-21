@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Import Google Icon Font-->
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css" media="screen,projection" />
+
+		<!--Let browser know website is optimized for mobile-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+		<meta charset="utf-8"/>
+	</head>
+
+	<body>
+	
+		
+		
+		
+		<div class="container mc_pane" id="pane2">
+			<div class="section">
+				<div class="row">
+					
+
+					  <div class="switch">
+    <label>
+      Off
+      <input id="switch1" class="update_switch"  type="checkbox" >
+      <span class="lever"></span>
+      On
+    </label>
+    
+  </div>
+
+				</div>
+
+        
+				
+				<div class="row">
+					<form class="col s12">
+						
+						
+						<div class="row">
+							<div class="input-field col s12">
+								<label for="txt_delay">Brightness</label><br/>
+								<p class="range-field">
+                                    <input type="range" id="rng_brightness"   min="0" max="255" value="255"   class="update_brightness" />
+                                </p>
+							</div>
+					
+						</div>
+					</form>
+				</div>
+							<div class="row">
+					<form class="col s12">
+						
+						
+						<div class="row">
+							
+								<div class="input-field col s12">
+								<label for="txt_speed">speed</label><br/>
+								<p class="range-field">
+                                    <input type="range" id="rng_speed"   min="0" max="15" value="15"   class="update_speed" />
+                                </p>
+							</div>
+				
+						</div>
+					</form>
+				</div>
+							<div class="row">
+					<form class="col s12">
+						
+						
+						<div class="row">
+							
+															<div class="input-field col s12">
+								<label for="txt_step">step</label><br/>
+								<p class="range-field">
+                                    <input type="range" id="rng_step"   min="0" max="255" value="255"   class="update_step" />
+                                </p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		
+		<style type="text/css">
+			.btn_grid {
+				margin: 7px 0;
+			}
+		</style>
+	
+		<!--Import jQuery before materialize.js-->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+		<script type="text/javascript">(function($){
+$(function(){
+	  
+	// Settings
+	var host = window.location.hostname;
+	//host = "192.168.0.24";
+
+	var ws_url = 'ws://' + host + ':81';
+	var connection;
+	var ws_waiting = 0;
+
+	// ******************************************************************
+
+	
+	// ******************************************************************
+	// init()
+	// ******************************************************************
+	function init() {
+		console.log("Connection websockets to:", ws_url);
+		connection = new WebSocket(ws_url, ['arduino']);
+				
+		// When the connection is open, send some data to the server
+		connection.onopen = function () {
+			//connection.send('Ping'); // Send the message 'Ping' to the server
+			console.log('WebSocket Open');
+		};
+
+		// Log errors
+		connection.onerror = function (error) {
+			console.log('WebSocket Error ' + error);
+			$('#mc-wsloader').addClass('hide');
+			$('#mc-wserror').removeClass('hide');
+		};
+
+		// Log messages from the server
+		connection.onmessage = function (e) {
+			console.log('WebSocket from server: ' + e.data);
+			if(e.data == '?1') {
+			  document.getElementById('switch1').checked = true;
+			} else if (e.data == '?0') {
+			  document.getElementById('switch1').checked = false;
+			}
+			else if(e.data[0] == '@'){
+		
+			  document.getElementById('rng_brightness').value = e.data.substring(1);
+			}
+				else if(e.data[0] == '#'){
+		
+			  document.getElementById('rng_speed').value = e.data.substring(1);
+			}
+		
+				else if(e.data[0] == '*'){
+		
+			  document.getElementById('rng_step').value = e.data.substring(1);
+			}
+		
+			
+			ws_waiting = 0;
+		};
+	}
+	
+	// ******************************************************************
+	// Helper
+	// ******************************************************************	
+
+	
+	
+	// ******************************************************************
+	// Modes
+	// ******************************************************************	
+
+	
+	
+	
+	
+	
+	$("#pane2").on("change", ".update_brightness", function() {
+		var brightness = $("#rng_brightness").val();		
+		
+		wsSendCommand("@" + brightness);
+	});
+	
+		$("#pane2").on("change", ".update_speed", function() {
+		var brightness = $("#rng_speed").val();		
+		
+		wsSendCommand("#" + brightness);
+	});
+		$("#pane2").on("change", ".update_step", function() {
+		var brightness = $("#rng_step").val();		
+		
+		wsSendCommand("*" + brightness);
+	});
+	
+		$("#pane2").on("change", ".update_switch", function() {
+	
+		  wsSendCommand("?");
+		
+
+
+	});
+	
+	
+	
+	
+	// ******************************************************************
+	// WebSocket commands
+	// ******************
+		function wsSendCommand(cmd) {
+		console.log("Send WebSocket command:", cmd);
+		if (ws_waiting == 0)  {
+			connection.send(cmd);
+			ws_waiting++;
+		} else {
+			console.log("++++++++ WS call waiting, skip")
+		}
+	}	
+	
+	
+
+	
+	
+
+	// ******************************************************************
+	// main
+	// ******************************************************************
+	init();
+	
+}); // end of document ready
+})(jQuery); // end of jQuery name space</script>
+	</body>
+</html>
